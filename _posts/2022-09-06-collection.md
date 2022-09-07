@@ -4,9 +4,7 @@
 객체 그룹을 저장하고 조작하는데 간편화된 자료구조를 제공해준다.
 
 자바 컬렉션에는 크게 3가지 인터페이스를 제공하는데, 각각 List, Queue, Set 이다.
-
-<그림>
-
+#
 #
 
 List는  LinkedList, Vector, ArrayList들을 구현체로
