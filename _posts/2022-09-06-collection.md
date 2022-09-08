@@ -4,7 +4,7 @@ title: "컬렉션은 무엇인가"
 tags: JAVA
 sitemap:
   changefreq : daily
-  priority : 1.0
+  priority : 0.5
 ---
 
 # 컬렉션은 무엇인가
