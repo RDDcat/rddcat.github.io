@@ -1,3 +1,12 @@
+---
+layout: post
+title: "컬렉션은 무엇인가"
+tags: JAVA
+sitemap:
+  changefreq : daily
+  priority : 1.0
+---
+
 # 컬렉션은 무엇인가
 
 자바에서 컬렉션은 데이터를 담는 여러가지 통이다.
