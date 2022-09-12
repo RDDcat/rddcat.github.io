@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "컬렉션은 무엇인가"
 tags: JAVA
 sitemap:
