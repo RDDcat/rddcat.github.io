@@ -105,7 +105,7 @@ analytics:
 # Site Author
 author:
   name             : "RDDcat"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/assets/gif/cattype.gif"
   bio              : "귀여워 고양이~"
   location         : "Korea"
   email            :
