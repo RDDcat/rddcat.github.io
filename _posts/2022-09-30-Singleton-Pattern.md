@@ -11,6 +11,6 @@ excerpt: "📘 싱글톤이란 무엇인가?"
 
 # 📘 싱글톤이란 무엇인가?
 ## 📖 싱글톤 (Singleton)
-<a href="/DesignPattern/Design-Pattern/">디자인 패턴</a>
+<a href="/designpattern/Design-Pattern/">디자인 패턴</a>
 
 ## 📖 자바로 구현한 싱글톤 코드 1
