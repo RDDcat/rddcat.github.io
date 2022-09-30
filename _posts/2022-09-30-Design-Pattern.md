@@ -7,6 +7,7 @@ changefreq : daily
 priority : 0.5
 categories : DesignPattern
 excerpt: "📘 디자인 패턴이란?"
+permalink : "/01/"
 ---
 
 # 📘 디자인 패턴이란?
