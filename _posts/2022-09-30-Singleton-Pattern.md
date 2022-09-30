@@ -1,0 +1,15 @@
+---
+layout: single
+title: "싱글톤이란 무엇인가?"
+tags: 디자인 패턴, 싱글톤
+sitemap:
+changefreq : daily
+priority : 0.5
+---
+
+# 📘 싱글톤이란 무엇인가?
+## 📖 싱글톤 (Singleton)
+<a href="">디자인 패턴</a> 중 하나로
+
+
+## 📖 자바로 구현한 싱글톤 코드 1
