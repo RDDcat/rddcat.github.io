@@ -5,5 +5,7 @@ tags: JAVA, 어노테이션, annotation
 sitemap:
 changefreq : daily
 priority : 0.5
+categories : Tech
+excerpt: "📘 "
 ---
 

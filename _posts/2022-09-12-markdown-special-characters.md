@@ -5,10 +5,12 @@ tags: MarkDown
 sitemap:
 changefreq : daily
 priority : 0.5
+categories : Tech
+excerpt: "📘 마크다운 꺽쇠, 엔퍼센트 하는법"
 ---
 
 
-# 📘마크다운 (MarkDown) 꺽쇠, 엔퍼센트
+# 📘 마크다운 (MarkDown) 꺽쇠, 엔퍼센트
 
 꺽쇠 : &lt;
 

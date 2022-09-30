@@ -5,6 +5,8 @@ tags: 디자인 패턴, 싱글톤
 sitemap:
 changefreq : daily
 priority : 0.5
+categories : DesignPattern
+excerpt: "📘 싱글톤이란 무엇인가?"
 ---
 
 # 📘 싱글톤이란 무엇인가?

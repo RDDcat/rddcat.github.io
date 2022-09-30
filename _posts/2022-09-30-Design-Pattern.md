@@ -5,6 +5,8 @@ tags: 디자인 패턴
 sitemap:
 changefreq : daily
 priority : 0.5
+categories : DesignPattern
+excerpt: "📘 디자인 패턴이란?"
 ---
 
 # 📘 디자인 패턴이란?

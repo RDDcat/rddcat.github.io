@@ -5,6 +5,8 @@ tags: JAVA
 sitemap:
   changefreq : daily
   priority : 0.5
+categories : Tech
+excerpt: "📘 컬렉션은 무엇인가"
 ---
 
 # 📘컬렉션은 무엇인가

@@ -5,6 +5,8 @@ tags: jekyll, 깃헙블로그
 sitemap:
 changefreq : daily
 priority : 0.5
+categories : Tech
+excerpt: "📘 깃헙 블로그 오른쪽위에 Quick-Start Quide 지우기"
 ---
 
 ## 📘 깃헙 블로그 오른쪽위에 Quick-Start Quide 지우기

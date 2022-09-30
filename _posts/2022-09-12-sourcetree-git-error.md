@@ -5,6 +5,8 @@ tags: Sorcetree, error
 sitemap:
 changefreq : daily
 priority : 0.5
+categories : Tech
+excerpt: "📘 마크다운 꺽쇠, 엔퍼센트 하는법"
 ---
 
 # 📘소스트리 에러 503 Unable to access

@@ -5,6 +5,8 @@ tags: MarkDown
 sitemap:
 changefreq : daily
 priority : 0.5
+categories : Tech
+excerpt: "📘 마크다운 문법에서 줄바꿈하는법!"
 ---
 
 ## 📘마크다운 문법에서 줄바꿈하는법!

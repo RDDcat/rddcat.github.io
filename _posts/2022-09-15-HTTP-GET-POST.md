@@ -5,6 +5,8 @@ tags: HTTP, HTTPS, GET, POST, HTTP GET, HTTP POST
 sitemap:
 changefreq : daily
 priority : 0.5
+categories : Tech
+excerpt: "📘 HTTP Get과 Post란"
 ---
 
 ## 📘 HTTP Get 메소드란?

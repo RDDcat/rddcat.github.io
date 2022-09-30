@@ -5,6 +5,8 @@ tags: Stateless, HTTP
 sitemap:
 changefreq : daily
 priority : 0.5
+categories : Tech
+excerpt: "📘 Stateless란 무엇인가?"
 ---
 
 ## 📘 Stateless란 무엇인가?

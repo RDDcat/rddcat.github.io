@@ -5,6 +5,8 @@ tags: JAVA
 sitemap:
 changefreq : daily
 priority : 0.5
+categories : Tech
+excerpt: "📘 삽입정렬이란 무엇인가.."
 ---
 
 # 📘삽입정렬 (InsertionSort)
