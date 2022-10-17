@@ -43,9 +43,13 @@ Consider the following:
 
 #### 1. 설정이 없더라도 무시하기
 
-spring boot 프로젝트를 살피다 보면 src 폴더에 SpringApplication (프로젝트마다 이름이 다름)을 찾아서 다음과 같이 어노테이션@을 수정해준다.  
+spring boot 프로젝트를 살피다 보면 src 폴더에 SpringApplication(프로젝트마다 이름이 다름)을 찾아준다.  
 
-@SpringBootApplication 어노테이션이 달려있는 클래스를 찾는다.
+@SpringBootApplication 어노테이션이 달려있는 클래스로 찾아도 동일하다.
+
+그리고 다음과 같이 어노테이션@을 수정해준다.  
+
+<br>  
 
 ```java
 @SpringBootApplication(exclude ={DataSourceAutoConfiguration.class})
@@ -55,8 +59,9 @@ public class SpringApplication {
 	}
 }
 
-```
+```  
 
+<br>  
 
 #### 2. 설정 해주기
 
@@ -66,7 +71,9 @@ public class SpringApplication {
 
 properties를 사용하면 properties로 설정 셋팅을 야믈(yaml)로 설정하면 yml 파일로 설정해 주세요~
 
-2-1. application.properties
+<br>  
+2-1. application.properties  
+
 h2
 ```properties
 spring.datasource.url=jdbc:h2:mem:localhost
@@ -84,6 +91,8 @@ spring.datasource.password=password
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 ```
 [DB이름]은 각각의 프로젝트에 맞춰서..
+
+<br>  
 
 2-2 application.yml
 
