@@ -106,7 +106,7 @@ analytics:
 author:
   name             : "RDDcat"
   avatar           : "/assets/gif/cattype.gif"
-  bio              : "귀여워 고양이~"
+  bio              : "do { if (work) interact(); if (rest) sleep(); if(tired) drinkCoffee; } while (1);"
   location         : "Korea"
   email            :
   links:
