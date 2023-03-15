@@ -44,6 +44,10 @@ categories : Tech
 
 누르니까 vm option을 셋팅할 수 있는 창이 추가된다.
 
+![image](https://user-images.githubusercontent.com/55569476/225250852-d2f74e52-3f9a-49e5-8118-2764e9410285.png)
+
+<br>
+
 짜잔! 해결
 
 
