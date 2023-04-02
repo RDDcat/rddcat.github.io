@@ -8,7 +8,7 @@ priority : 0.5
 categories : Tech
 ---
 ##  풀이
-### JAVA
+### 📖 JAVA
 
 >
 
@@ -24,7 +24,7 @@ categories : Tech
 
 <br>
 
-### 풀이
+### 📖 풀이
 [자바코드링크]("")
 
 ```java

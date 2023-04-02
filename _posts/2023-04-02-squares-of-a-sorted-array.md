@@ -8,7 +8,7 @@ priority : 0.5
 categories : Tech
 ---
 ## 977. Squares of a Sorted Array 풀이
-### JAVA
+### 📖 JAVA
 
 >Given an integer array nums sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.
 
@@ -24,7 +24,7 @@ categories : Tech
 
 <br>
 
-### 풀이
+### 📖 풀이
 [자바코드링크]("https://github.com/RDDcat/Algorithm/blob/main/coding/src/main/java/com/maro/coding/leetcode/SquaresOfSortedArray977.java")
 
 ```java
