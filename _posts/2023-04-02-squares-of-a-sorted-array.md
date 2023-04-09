@@ -25,7 +25,7 @@ categories : Tech
 <br>
 
 ### 📖 풀이
-[자바코드링크]("https://github.com/RDDcat/Algorithm/blob/main/coding/src/main/java/com/maro/coding/leetcode/SquaresOfSortedArray977.java")
+[자바코드링크](https://github.com/RDDcat/Algorithm/blob/main/coding/src/main/java/com/maro/coding/leetcode/SquaresOfSortedArray977.java)
 
 ```java
 public int[] sortedSquares(int[] nums) {
