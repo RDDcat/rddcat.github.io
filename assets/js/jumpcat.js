@@ -7,9 +7,9 @@ let blue = "#20A4F3";
 var img주인공1 = new Image();
 var img주인공2 = new Image();
 var img장애물 = new Image();
-img주인공1.src = 'cat_walk_1.jpg';
-img주인공2.src = 'cat_walk_2.jpg';
-img장애물.src = 'cactus.jpg';
+img주인공1.src = 'asset/photo/cat_walk_1.jpg';
+img주인공2.src = 'asset/photo/cat_walk_2.jpg';
+img장애물.src = 'asset/photo/cactus.jpg';
 
 var dino = {
   x : 15,
