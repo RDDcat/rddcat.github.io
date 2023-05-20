@@ -143,7 +143,7 @@ function drawScore() {
 var 점프중 = false;
 
 document.addEventListener('keydown', function(e){
-  if(e.code === 'Space'){
+  if(e.code === 'j' || 'Space'){
     점프중 = true;
   }
 })
