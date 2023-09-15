@@ -11,7 +11,7 @@ categories : Tech
 
 시크릿키를 ec2에 배포될때 넘겨준다고 touch를 이용해서 넘겨주는 방식이 몇개 보였다.
 
-![img_12.png](img_12.png)
+![img_12](https://github.com/RDDcat/ShowNF-backend/assets/55569476/a7c68bd8-bef5-432b-b2d9-fe5159d14b0f)
 
 구글에서 뒤적이다가 docker -e 나 docker --env 등으로 데이터를 넘겨주는 방식이 작동하지 않아 찾게된 방식인데..
 
@@ -23,15 +23,15 @@ categories : Tech
 
 https://velog.io/@rmswjdtn/Spring-Docker-Github-Action-Spring-Boot-%EC%9E%90%EB%8F%99%EB%B0%B0%ED%8F%AC%ED%99%98%EA%B2%BD-%EB%A7%8C%EB%93%A4%EA%B8%B0
 
-![img_10.png](img_10.png)
+![img_10](https://github.com/RDDcat/ShowNF-backend/assets/55569476/67996ca1-deef-4297-b81b-78b4a994212c)
 
-![img_11.png](img_11.png)
+![img_11](https://github.com/RDDcat/ShowNF-backend/assets/55569476/643ab101-889b-4428-9ac1-3549ed857251)
 
 비슷한 방식을 발견
 
 아니나 다를까 ㅋㅋ
 
-![img_13.png](img_13.png)
+![img_13](https://github.com/RDDcat/ShowNF-backend/assets/55569476/dcb7938a-7bfa-4196-902f-200e51e7d56c)
 
 모두에게 공개되어있는 password ??!
 
@@ -54,7 +54,7 @@ https://velog.io/@rmswjdtn/Spring-Docker-Github-Action-Spring-Boot-%EC%9E%90%EB%
 
 # 2
 
-![img_14.png](img_14.png)
+![img_14](https://github.com/RDDcat/ShowNF-backend/assets/55569476/c26870b4-9cbc-49da-b372-cf121a5eba33)
 
 https://zzang9ha.tistory.com/404
 
