@@ -1,7 +1,9 @@
 ---
 layout: single
 title: "내 테스트 코드는 통과하는데?? 외않되.."
-tags: 알고리즘, 고난, leetcode, leetcode35 
+tags: [기술정리, 알고리즘]
+post_type: "article"
+summary: "테스트 코드로 알고리즘 검증 시 겪은 고난과 해결"
 sitemap:
 changefreq : daily
 priority : 0.5

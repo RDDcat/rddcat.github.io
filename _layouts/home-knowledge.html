@@ -1,0 +1,109 @@
+---
+layout: default
+---
+
+<div id="main" role="main">
+  {% include sidebar.html %}
+
+  <div class="archive knowledge-home">
+
+    <!-- Hero Section -->
+    <section class="knowledge-hero">
+      <h1 class="knowledge-hero__title">생각을 연결하는 공간</h1>
+      <p class="knowledge-hero__subtitle">생각정리 · 기술정리 · 디자인정리 · 프로젝트를 축적하고 연결하는 개인 지식 아카이브</p>
+      <div class="knowledge-hero__actions">
+        <a href="/graph/" class="btn btn--primary btn--large">지식 그래프 탐색</a>
+        <a href="/posts/" class="btn btn--inverse btn--large">모든 글 보기</a>
+      </div>
+    </section>
+
+    <!-- Topic Pillars -->
+    <section class="knowledge-pillars">
+      <h2 class="section__title">주제 축</h2>
+      <div class="pillar-grid">
+        {% assign thought_posts = site.posts | where_exp: "post", "post.tags contains '생각정리'" %}
+        {% assign tech_posts = site.posts | where_exp: "post", "post.tags contains '기술정리'" %}
+        {% assign design_posts = site.posts | where_exp: "post", "post.tags contains '디자인정리'" %}
+        {% assign project_posts = site.posts | where_exp: "post", "post.tags contains '프로젝트'" %}
+
+        <a href="/tags/#생각정리" class="pillar-card pillar-card--thought">
+          <div class="pillar-card__icon">💭</div>
+          <h3 class="pillar-card__title">생각 정리</h3>
+          <p class="pillar-card__desc">관점, 태도, 일하는 방식</p>
+          <span class="pillar-card__count">{{ thought_posts.size }}개의 글</span>
+        </a>
+
+        <a href="/tags/#기술정리" class="pillar-card pillar-card--tech">
+          <div class="pillar-card__icon">⚙️</div>
+          <h3 class="pillar-card__title">기술 정리</h3>
+          <p class="pillar-card__desc">개념, 트러블슈팅, 구조 설계</p>
+          <span class="pillar-card__count">{{ tech_posts.size }}개의 글</span>
+        </a>
+
+        <a href="/tags/#디자인정리" class="pillar-card pillar-card--design">
+          <div class="pillar-card__icon">🎨</div>
+          <h3 class="pillar-card__title">디자인 정리</h3>
+          <p class="pillar-card__desc">UI/UX, 시각 구조, 인터랙션</p>
+          <span class="pillar-card__count">{{ design_posts.size }}개의 글</span>
+        </a>
+
+        <a href="/projects/" class="pillar-card pillar-card--project">
+          <div class="pillar-card__icon">🚀</div>
+          <h3 class="pillar-card__title">프로젝트</h3>
+          <p class="pillar-card__desc">문제 해결과 결과물</p>
+          <span class="pillar-card__count">{{ project_posts.size }}개의 글</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Tag Cloud -->
+    <section class="knowledge-tags">
+      <h2 class="section__title">태그 맵</h2>
+      <div class="tag-cloud">
+        {% assign sorted_tags = site.tags | sort %}
+        {% for tag in sorted_tags %}
+          {% assign tag_size = tag[1].size %}
+          {% if tag_size > 3 %}
+            {% assign font_class = "tag--xl" %}
+          {% elsif tag_size > 2 %}
+            {% assign font_class = "tag--lg" %}
+          {% elsif tag_size > 1 %}
+            {% assign font_class = "tag--md" %}
+          {% else %}
+            {% assign font_class = "tag--sm" %}
+          {% endif %}
+          <a href="/tags/#{{ tag[0] | slugify: 'none' }}" class="tag-cloud__tag {{ font_class }}">
+            {{ tag[0] }} <sup>{{ tag_size }}</sup>
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- Recent Posts -->
+    <section class="knowledge-recent">
+      <h2 class="section__title">최근 글</h2>
+      <div class="entries-list">
+        {% for post in site.posts limit:8 %}
+          {% include archive-single.html type="list" %}
+        {% endfor %}
+      </div>
+      <div class="knowledge-recent__more">
+        <a href="/posts/" class="btn btn--inverse">모든 글 보기 →</a>
+      </div>
+    </section>
+
+    <!-- Mini Graph Preview -->
+    <section class="knowledge-graph-preview">
+      <h2 class="section__title">지식 연결 미리보기</h2>
+      <p class="section__desc">글과 태그가 어떻게 연결되어 있는지 한눈에 볼 수 있습니다.</p>
+      <div id="mini-graph-container" class="mini-graph-container"></div>
+      <div class="knowledge-graph-preview__more">
+        <a href="/graph/" class="btn btn--primary">전체 그래프 보기 →</a>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="{{ '/assets/js/knowledge-graph.js' | relative_url }}"></script>

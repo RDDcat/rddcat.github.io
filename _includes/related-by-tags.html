@@ -1,0 +1,50 @@
+{% comment %}
+  태그 기반 관련 글 표시 컴포넌트
+  현재 글의 태그와 겹치는 다른 글을 최대 6개까지 노출
+{% endcomment %}
+
+{% assign max_related = 6 %}
+{% assign min_common_tags = 1 %}
+{% assign related_posts = "" | split: "" %}
+
+{% for post in site.posts %}
+  {% if post.url == page.url %}
+    {% continue %}
+  {% endif %}
+
+  {% assign common_tags = 0 %}
+  {% for tag in page.tags %}
+    {% if post.tags contains tag %}
+      {% assign common_tags = common_tags | plus: 1 %}
+    {% endif %}
+  {% endfor %}
+
+  {% if common_tags >= min_common_tags %}
+    {% assign related_posts = related_posts | push: post %}
+  {% endif %}
+
+  {% if related_posts.size >= max_related %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% if related_posts.size > 0 %}
+<div class="related-by-tags">
+  <h2 class="related-by-tags__title">
+    <span class="related-by-tags__icon">🔗</span> 연결된 글
+  </h2>
+  <div class="related-by-tags__list">
+    {% for post in related_posts limit:max_related %}
+    <a href="{{ post.url | relative_url }}" class="related-by-tags__item">
+      <span class="related-by-tags__item-title">{{ post.title }}</span>
+      <span class="related-by-tags__item-tags">
+        {% for tag in post.tags limit:3 %}
+          <span class="related-tag">{{ tag }}</span>
+        {% endfor %}
+      </span>
+      <span class="related-by-tags__item-date">{{ post.date | date: "%Y.%m.%d" }}</span>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}

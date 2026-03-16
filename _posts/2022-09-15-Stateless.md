@@ -1,12 +1,14 @@
 ---
 layout: single
 title: "Stateless란 무엇인가?"
-tags: Stateless, HTTP
+tags: [기술정리, 백엔드]
 sitemap:
 changefreq : daily
 priority : 0.5
 categories : Tech
 excerpt: "📘 Stateless란 무엇인가?"
+summary: "HTTP Stateless의 개념과 장단점, 쿠키/세션 보완"
+post_type: "article"
 ---
 
 ## 📘 Stateless란 무엇인가?

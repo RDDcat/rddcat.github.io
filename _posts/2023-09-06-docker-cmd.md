@@ -1,7 +1,9 @@
 ---
 layout: single
 title: "도커 명령어"
-tags: Dokcer
+tags: [기술정리, 인프라]
+post_type: "article"
+summary: "디버깅용 도커 명령어 정리"
 sitemap:
   changefreq : daily
   priority : 0.5

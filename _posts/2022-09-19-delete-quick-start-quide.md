@@ -1,12 +1,14 @@
 ---
 layout: single
 title: "깃헙 지킬 블로그 Quick Start Quide 지우는 방법"
-tags: jekyll, 깃헙블로그
+tags: [기술정리, 프론트엔드]
 sitemap:
 changefreq : daily
 priority : 0.5
 categories : Tech
 excerpt: "📘 깃헙 블로그 오른쪽위에 Quick-Start Quide 지우기"
+summary: "Jekyll 블로그에서 Quick-Start Guide 메뉴 제거 방법"
+post_type: "article"
 ---
 
 ## 📘 깃헙 블로그 오른쪽위에 Quick-Start Quide 지우기

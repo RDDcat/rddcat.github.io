@@ -1,12 +1,14 @@
 ---
 layout: single
 title: "삽입정렬이란 [코드포함]"
-tags: JAVA
+tags: [기술정리, 알고리즘]
 sitemap:
 changefreq : daily
 priority : 0.5
 categories : Tech
 excerpt: "📘 삽입정렬이란 무엇인가.."
+summary: "삽입정렬 알고리즘의 개념, 코드, 시간복잡도 정리"
+post_type: "article"
 ---
 
 # 📘삽입정렬 (InsertionSort)

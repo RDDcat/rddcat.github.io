@@ -1,7 +1,9 @@
 ---
 layout: single
 title: "리트코드 35 Search Insert Position"
-tags: 알고리즘, 고난, leetcode, leetcode35 
+tags: [기술정리, 알고리즘]
+post_type: "article"
+summary: "LeetCode 35번 Search Insert Position 이진탐색 풀이"
 sitemap:
 changefreq : daily
 priority : 0.5

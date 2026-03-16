@@ -1,12 +1,14 @@
 ---
 layout: single
 title: "마크다운 문법에서 줄바꿈하는법!"
-tags: MarkDown
+tags: [기술정리]
 sitemap:
 changefreq : daily
 priority : 0.5
 categories : Tech
 excerpt: "📘 마크다운 문법에서 줄바꿈하는법!"
+summary: "마크다운 문법에서 줄바꿈하는 방법"
+post_type: "article"
 ---
 
 ## 📘마크다운 문법에서 줄바꿈하는법!

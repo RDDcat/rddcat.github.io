@@ -1,12 +1,14 @@
 ---
 layout: single
 title: "컬렉션은 무엇인가"
-tags: JAVA
+tags: [기술정리, 백엔드]
 sitemap:
   changefreq : daily
   priority : 0.5
 categories : Tech
 excerpt: "📘 컬렉션은 무엇인가"
+summary: "자바 컬렉션(List, Queue, Set)의 개념과 특징 정리"
+post_type: "article"
 ---
 
 # 📘컬렉션은 무엇인가

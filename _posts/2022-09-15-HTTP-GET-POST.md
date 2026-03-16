@@ -1,12 +1,14 @@
 ---
 layout: single
 title: "HTTP Get과 Post란 (+차이)"
-tags: HTTP, HTTPS, GET, POST, HTTP GET, HTTP POST
+tags: [기술정리, 백엔드]
 sitemap:
 changefreq : daily
 priority : 0.5
 categories : Tech
 excerpt: "📘 HTTP Get과 Post란"
+summary: "HTTP GET과 POST 메소드의 개념과 차이점"
+post_type: "article"
 ---
 
 ## 📘 HTTP Get 메소드란?

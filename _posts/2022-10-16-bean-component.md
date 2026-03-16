@@ -1,12 +1,14 @@
 ---
 layout: single
 title: "@Bean과 @Component의 차이?"
-tags: @Bean, @Component
+tags: [기술정리, 백엔드]
 sitemap:
 changefreq : daily
 priority : 0.5
 categories : Tech
 excerpt: "📘 @Bean과 @Component의 차이?"
+post_type: "article"
+summary: "Spring의 @Bean과 @Component 어노테이션의 차이를 설명합니다."
 ---
 # 📘 @Bean과 @Component의 차이?
 

@@ -1,11 +1,13 @@
 ---
 layout: single
 title: "인텔리제이 한글이 깨질때"
-tags: intellij, 인텔리제이
+tags: [기술정리]
 sitemap:
 changefreq : daily
 priority : 0.5
 categories : Tech
+post_type: "article"
+summary: "인텔리제이에서 한글이 깨질 때 해결 방법을 안내합니다."
 ---
 ## 📘 인텔리제이 한글이 깨져요..
 

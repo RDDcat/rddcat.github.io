@@ -1,0 +1,42 @@
+---
+title: "지식 그래프"
+layout: default
+permalink: /graph/
+author_profile: false
+---
+
+<div id="main" role="main">
+  <div class="graph-page">
+    <header class="graph-page__header">
+      <h1 class="graph-page__title">지식 그래프</h1>
+      <p class="graph-page__description">글과 태그, 프로젝트의 연결을 시각적으로 탐색할 수 있습니다.<br>노드를 클릭하면 해당 글이나 태그로 이동합니다.</p>
+    </header>
+
+    <div class="graph-controls">
+      <div class="graph-controls__filters">
+        <button class="graph-filter-btn active" data-filter="all">전체</button>
+        <button class="graph-filter-btn" data-filter="post">글</button>
+        <button class="graph-filter-btn" data-filter="tag">태그</button>
+        <button class="graph-filter-btn" data-filter="project">프로젝트</button>
+      </div>
+      <div class="graph-controls__search">
+        <input type="text" id="graph-search" placeholder="노드 검색..." />
+      </div>
+    </div>
+
+    <div id="graph-container" class="graph-container">
+      <svg id="graph-svg"></svg>
+    </div>
+
+    <div class="graph-legend">
+      <span class="graph-legend__item"><span class="graph-legend__dot graph-legend__dot--post"></span> 글</span>
+      <span class="graph-legend__item"><span class="graph-legend__dot graph-legend__dot--tag"></span> 태그</span>
+      <span class="graph-legend__item"><span class="graph-legend__dot graph-legend__dot--project"></span> 프로젝트</span>
+    </div>
+
+    <div id="graph-tooltip" class="graph-tooltip" style="display:none;"></div>
+  </div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="{{ '/assets/js/knowledge-graph.js' | relative_url }}"></script>

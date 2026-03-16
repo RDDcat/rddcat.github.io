@@ -1,11 +1,13 @@
 ---
 layout: single
 title: "캐시란 무엇인가?"
-tags: 캐시, cache
+tags: [기술정리, 백엔드]
 sitemap:
 changefreq : daily
 priority : 0.5
 categories : Tech
+post_type: "article"
+summary: "캐시의 개념, CPU 캐시, 캐시 서버에 대한 설명입니다."
 ---
 
 ## 📘 캐시란 무엇인가?

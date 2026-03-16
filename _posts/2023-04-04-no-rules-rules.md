@@ -1,7 +1,9 @@
 ---
 layout: single
 title: "넷플릭스 규칙없음 (No Rules Rules)을 읽었다."
-tags: 독후감, 독서
+tags: [생각정리, 독서, 커리어]
+post_type: "article"
+summary: "넷플릭스 문화를 담은 No Rules Rules 독후감"
 sitemap:
 changefreq : daily
 priority : 0.5

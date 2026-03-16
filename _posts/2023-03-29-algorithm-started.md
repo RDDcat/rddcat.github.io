@@ -1,7 +1,9 @@
 ---
 layout: single
 title: "알고리즘을 공부하기 싫어서 테스트 코드를 짜기로 했다."
-tags: 알고리즘, 테스트코드, leetcode 
+tags: [기술정리, 알고리즘, 회고]
+post_type: "article"
+summary: "알고리즘 공부를 테스트 코드 작성과 연계하여 진행한 회고"
 sitemap:
 changefreq : daily
 priority : 0.5

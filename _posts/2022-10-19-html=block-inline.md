@@ -1,11 +1,13 @@
 ---
 layout: single
 title: "HTML 블럭요소와 인라인요소란?"
-tags: HTML
+tags: [기술정리, 프론트엔드]
 sitemap:
 changefreq : daily
 priority : 0.5
 categories : Tech
+post_type: "article"
+summary: "HTML 블록 요소와 인라인 요소의 차이를 설명합니다."
 ---
 
 # 📘 HTML 블럭요소와 인라인요소란?

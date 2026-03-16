@@ -1,7 +1,9 @@
 ---
 layout: single
 title: "[JAVA] 풀이"
-tags: 알고리즘, leetcode, leetcode, JAVA
+tags: [기술정리, 알고리즘]
+post_type: "article"
+summary: "알고리즘 풀이 템플릿"
 sitemap:
 changefreq : daily
 priority : 0.5

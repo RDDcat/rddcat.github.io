@@ -1,11 +1,13 @@
 ---
 layout: single
 title: "SQLSyntaxErrorException 인데 문법이 안틀렸을때"
-tags: sql, MaridDB
+tags: [기술정리, 데이터베이스]
 sitemap:
 changefreq : daily
 priority : 0.5
 categories : Tech
+post_type: "article"
+summary: "MariaDB SQL 예약어로 인한 구문 오류 해결 방법을 안내합니다."
 ---
 ## 📘 SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'integer, version_id bigint'
 

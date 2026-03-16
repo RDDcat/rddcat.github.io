@@ -1,12 +1,14 @@
 ---
 layout: single
 title: "디자인패턴은 무엇인가?"
-tags: 디자인 패턴
+tags: [기술정리, 백엔드]
 sitemap:
 changefreq : daily
 priority : 0.5
 categories : DesignPattern
 excerpt: "📘 디자인 패턴이란?"
+post_type: "article"
+summary: "디자인 패턴의 개념과 기본 정의를 소개합니다."
 ---
 
 # 📘 디자인 패턴이란?

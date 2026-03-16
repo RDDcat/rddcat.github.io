@@ -1,7 +1,9 @@
 ---
 layout: single
 title: "[JAVA] 977. Squares of a Sorted Array 풀이"
-tags: 알고리즘, leetcode, leetcode977, JAVA
+tags: [기술정리, 알고리즘]
+post_type: "article"
+summary: "LeetCode 977번 Squares of a Sorted Array 투포인터 풀이"
 sitemap:
 changefreq : daily
 priority : 0.5

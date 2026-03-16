@@ -1,11 +1,13 @@
 ---
 layout: single
 title: "인텔리제이 edit configuration vm options 안보임"
-tags: 인텔리제이, 옵션
+tags: [기술정리]
 sitemap:
 changefreq : daily
 priority : 0.5
 categories : Tech
+post_type: "article"
+summary: "인텔리제이에서 VM options 설정이 보이지 않을 때 해결 방법을 안내합니다."
 ---
 ## 인텔리제이 최신버전에서 edit configuration셋팅 안에 vm options 안보임..
 

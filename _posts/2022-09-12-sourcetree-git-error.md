@@ -1,12 +1,14 @@
 ---
 layout: single
 title: "소스트리 에러 503 Unable to access"
-tags: Sorcetree, error
+tags: [기술정리, 인프라]
 sitemap:
 changefreq : daily
 priority : 0.5
 categories : Tech
 excerpt: "📘 마크다운 꺽쇠, 엔퍼센트 하는법"
+summary: "소스트리 503 Unable to access 에러 해결 방법"
+post_type: "article"
 ---
 
 # 📘소스트리 에러 503 Unable to access

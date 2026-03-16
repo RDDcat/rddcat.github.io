@@ -1,11 +1,13 @@
 ---
 layout: single
 title: "Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured."
-tags: Error
+tags: [기술정리, 백엔드]
 sitemap:
 changefreq : daily
 priority : 0.5
 categories : Tech
+post_type: "article"
+summary: "Spring Boot DataSource 설정 오류 해결 방법을 안내합니다."
 ---
 # 📘 Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured. 
 

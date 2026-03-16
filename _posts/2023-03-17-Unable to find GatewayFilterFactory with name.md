@@ -1,7 +1,9 @@
 ---
 layout: single
 title: "인텔리제이 edit configuration vm options 안보임"
-tags: 인텔리제이, 옵션
+tags: [기술정리, 백엔드, 인프라]
+post_type: "article"
+summary: "Spring Cloud Gateway 필터 설정 오류 해결 방법"
 sitemap:
 changefreq : daily
 priority : 0.5

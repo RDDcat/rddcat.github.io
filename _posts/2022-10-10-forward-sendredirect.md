@@ -1,12 +1,14 @@
 ---
 layout: single
 title: "Forward와 Send-Redirect의 차이"
-tags: JSP, Servlet
+tags: [기술정리, 백엔드]
 sitemap:
 changefreq : daily
 priority : 0.5
 categories : Tech
 excerpt: "📘 JSP 서블릿에서 Forward와 Send-Redirect의 차이"
+post_type: "article"
+summary: "JSP/Servlet에서 Forward와 Send-Redirect의 차이점을 설명합니다."
 ---
 # Forward와 Send Redirect의 차이점
 
