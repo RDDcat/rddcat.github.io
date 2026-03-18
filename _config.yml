@@ -18,7 +18,7 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 locale                   : "ko-KR"
 title                    : "마로가아니다"
 title_separator          : "-"
-subtitle                 : "생각 · 기술 · 디자인 · 프로젝트"
+subtitle                 :
 name                     : "RDDcat"
 description              : "생각정리, 기술정리, 디자인정리, 프로젝트를 연결하는 개인 지식 아카이브"
 url                      : "https://rddcat.github.io"
@@ -292,12 +292,12 @@ defaults:
       type: posts
     values:
       layout: single
-      author_profile: true
+      author_profile: false
       read_time: true
       comments: # true
       share: true
       related: true
-      sidebar_main: true
+      sidebar_main: false
       post_type: "article"
   # _projects
   - scope:
@@ -305,7 +305,7 @@ defaults:
       type: projects
     values:
       layout: single
-      author_profile: true
+      author_profile: false
       read_time: true
       share: true
       related: true

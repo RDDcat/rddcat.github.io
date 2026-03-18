@@ -2,8 +2,8 @@
 title: "프로젝트"
 layout: archive
 permalink: /projects/
-author_profile: true
-sidebar_main: true
+author_profile: false
+sidebar_main: false
 ---
 
 <p class="page__lead">프로젝트를 통해 어떤 문제를 풀었고, 어떤 결과물을 만들었는지 정리합니다.</p>

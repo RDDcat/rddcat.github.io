@@ -2,8 +2,8 @@
 title: "모든 글"
 layout: archive
 permalink: /posts/
-author_profile: true
-sidebar_main: true
+author_profile: false
+sidebar_main: false
 ---
 
 {% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}

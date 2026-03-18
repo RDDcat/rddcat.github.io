@@ -1,15 +1,25 @@
 (function () {
   "use strict";
 
+  const THEMES = {
+    light: {
+      link: "#e2e8f0",
+      linkHover: "#94a3b8",
+      text: "#1e293b",
+      nodeStroke: "#fff",
+    },
+    dark: {
+      link: "rgba(124, 140, 255, 0.20)",
+      linkHover: "rgba(159, 176, 255, 0.78)",
+      text: "#ffffff",
+      nodeStroke: "#151b23",
+    },
+  };
+
   const COLORS = {
-    post: "#6366f1",
-    tag: "#f59e0b",
-    project: "#10b981",
-    link: "#e2e8f0",
-    linkHover: "#94a3b8",
-    bg: "#ffffff",
-    text: "#1e293b",
-    textMuted: "#64748b",
+    post: "#7c8cff",
+    tag: "#94a3b8",
+    project: "#6ee7b7",
   };
 
   const SIZES = {
@@ -18,19 +28,32 @@
     project: 7,
   };
 
+  function detectTheme(container) {
+    const bg = window.getComputedStyle(container).backgroundColor;
+    if (!bg || bg === "rgba(0, 0, 0, 0)") return "light";
+    const match = bg.match(/\d+/g);
+    if (match) {
+      const brightness = (parseInt(match[0]) + parseInt(match[1]) + parseInt(match[2])) / 3;
+      return brightness < 80 ? "dark" : "light";
+    }
+    return "light";
+  }
+
   function initGraph(containerId, dataUrl, options = {}) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
     const isMini = options.mini || false;
     const width = container.clientWidth || 800;
-    const height = isMini ? 300 : Math.max(500, window.innerHeight - 250);
+    const height = isMini ? 300 : Math.max(500, container.clientHeight || window.innerHeight - 250);
+    const theme = THEMES[detectTheme(container)];
 
-    container.innerHTML = "";
+    const existingSvg = container.querySelector("svg");
+    if (existingSvg) existingSvg.remove();
 
     const svg = d3
       .select(container)
-      .append("svg")
+      .insert("svg", ":first-child")
       .attr("width", width)
       .attr("height", height)
       .attr("viewBox", [0, 0, width, height]);
@@ -49,10 +72,10 @@
         if (isMini) {
           data = trimData(data, 40);
         }
-        renderGraph(g, data, width, height, isMini, svg, zoom);
+        renderGraph(g, data, width, height, isMini, svg, zoom, theme);
         if (!isMini) {
-          setupControls(data, g);
-          setupSearch(data, g);
+          setupControls(data, g, theme);
+          setupSearch(data, g, theme);
         }
       })
       .catch((err) => {
@@ -70,7 +93,9 @@
 
     const tagIds = new Set(tagNodes.map((n) => n.id));
 
-    const relevantLinks = data.links.filter((l) => tagIds.has(l.target) || tagIds.has(l.source));
+    const relevantLinks = data.links.filter(
+      (l) => tagIds.has(l.target) || tagIds.has(l.source)
+    );
     const relevantPostIds = new Set();
     relevantLinks.forEach((l) => {
       relevantPostIds.add(l.source);
@@ -86,11 +111,13 @@
 
     return {
       nodes: allNodes,
-      links: data.links.filter((l) => allIds.has(l.source) && allIds.has(l.target)),
+      links: data.links.filter(
+        (l) => allIds.has(l.source) && allIds.has(l.target)
+      ),
     };
   }
 
-  function renderGraph(g, data, width, height, isMini, svg, zoom) {
+  function renderGraph(g, data, width, height, isMini, svg, zoom, theme) {
     const simulation = d3
       .forceSimulation(data.nodes)
       .force(
@@ -113,7 +140,7 @@
       .selectAll("line")
       .data(data.links)
       .join("line")
-      .attr("stroke", COLORS.link)
+      .attr("stroke", theme.link)
       .attr("stroke-width", 1)
       .attr("stroke-opacity", 0.6);
 
@@ -131,7 +158,7 @@
       .append("circle")
       .attr("r", (d) => SIZES[d.type] || 5)
       .attr("fill", (d) => COLORS[d.type] || COLORS.post)
-      .attr("stroke", "#fff")
+      .attr("stroke", theme.nodeStroke)
       .attr("stroke-width", 1.5);
 
     if (!isMini) {
@@ -141,7 +168,7 @@
         .attr("dx", (d) => (SIZES[d.type] || 5) + 4)
         .attr("dy", "0.35em")
         .attr("font-size", (d) => (d.type === "tag" ? "11px" : "10px"))
-        .attr("fill", COLORS.text)
+        .attr("fill", theme.text)
         .attr("pointer-events", "none");
     }
 
@@ -157,8 +184,7 @@
           tooltip.innerHTML = buildTooltip(d);
           tooltip.style.left = event.clientX + 12 + "px";
           tooltip.style.top = event.clientY - 10 + "px";
-
-          highlightConnections(d, node, link, data);
+          highlightConnections(d, node, link, data, theme);
         })
         .on("mousemove", (event) => {
           tooltip.style.left = event.clientX + 12 + "px";
@@ -166,7 +192,7 @@
         })
         .on("mouseout", () => {
           tooltip.style.display = "none";
-          resetHighlight(node, link);
+          resetHighlight(node, link, theme);
         });
     }
 
@@ -181,9 +207,10 @@
 
     svg.node().__graphData = data;
     svg.node().__simulation = simulation;
+    svg.node().__theme = theme;
   }
 
-  function highlightConnections(d, node, link, data) {
+  function highlightConnections(d, node, link, data, theme) {
     const connectedIds = new Set();
     connectedIds.add(d.id);
 
@@ -200,7 +227,7 @@
       .attr("stroke", (l) => {
         const sid = typeof l.source === "object" ? l.source.id : l.source;
         const tid = typeof l.target === "object" ? l.target.id : l.target;
-        return sid === d.id || tid === d.id ? COLORS.linkHover : COLORS.link;
+        return sid === d.id || tid === d.id ? theme.linkHover : theme.link;
       })
       .attr("stroke-opacity", (l) => {
         const sid = typeof l.source === "object" ? l.source.id : l.source;
@@ -214,10 +241,10 @@
       });
   }
 
-  function resetHighlight(node, link) {
+  function resetHighlight(node, link, theme) {
     node.style("opacity", 1);
     link
-      .attr("stroke", COLORS.link)
+      .attr("stroke", theme.link)
       .attr("stroke-opacity", 0.6)
       .attr("stroke-width", 1);
   }
@@ -226,25 +253,25 @@
     let html = `<strong>${d.label}</strong>`;
     if (d.type === "tag") {
       html += `<br><span class="tt-type">태그</span>`;
-      if (d.count) html += ` · ${d.count}개의 글`;
+      if (d.count) html += ` &middot; ${d.count}개의 글`;
     } else if (d.type === "project") {
       html += `<br><span class="tt-type">프로젝트</span>`;
-      if (d.date) html += ` · ${d.date}`;
+      if (d.date) html += ` &middot; ${d.date}`;
     } else {
       html += `<br><span class="tt-type">글</span>`;
-      if (d.date) html += ` · ${d.date}`;
+      if (d.date) html += ` &middot; ${d.date}`;
     }
     if (d.tags && d.tags.length > 0) {
-      html += `<br><span class="tt-tags">${d.tags.join(" · ")}</span>`;
+      html += `<br><span class="tt-tags">${d.tags.join(" &middot; ")}</span>`;
     }
     return html;
   }
 
   function truncateLabel(label, max) {
-    return label.length > max ? label.substring(0, max) + "…" : label;
+    return label.length > max ? label.substring(0, max) + "\u2026" : label;
   }
 
-  function setupControls(data, g) {
+  function setupControls(data, g, theme) {
     const buttons = document.querySelectorAll(".graph-filter-btn");
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -267,7 +294,7 @@
     });
   }
 
-  function setupSearch(data, g) {
+  function setupSearch(data, g, theme) {
     const input = document.getElementById("graph-search");
     if (!input) return;
 

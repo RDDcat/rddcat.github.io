@@ -60,8 +60,6 @@ layout: default
 
       {% if page.share %}{% include social-share.html %}{% endif %}
 
-      {% include related-by-tags.html %}
-
       {% include post_pagination.html %}
     </div>
 
@@ -69,6 +67,8 @@ layout: default
       {% include comments.html %}
     {% endif %}
   </article>
+
+  {% include related-by-tags.html %}
 
   {% comment %}<!-- Tag-based related posts (grid) as fallback -->{% endcomment %}
   {% if page.id and page.related and site.related_posts.size > 0 %}

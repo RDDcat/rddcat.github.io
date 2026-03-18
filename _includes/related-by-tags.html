@@ -29,22 +29,27 @@
 {% endfor %}
 
 {% if related_posts.size > 0 %}
-<div class="related-by-tags">
+<section class="related-by-tags">
   <h2 class="related-by-tags__title">
     <span class="related-by-tags__icon">🔗</span> 연결된 글
   </h2>
   <div class="related-by-tags__list">
     {% for post in related_posts limit:max_related %}
     <a href="{{ post.url | relative_url }}" class="related-by-tags__item">
-      <span class="related-by-tags__item-title">{{ post.title }}</span>
-      <span class="related-by-tags__item-tags">
+      <div class="related-by-tags__item-head">
+        <span class="related-by-tags__item-title">{{ post.title }}</span>
+        <span class="related-by-tags__item-date">{{ post.date | date: "%Y.%m.%d" }}</span>
+      </div>
+      {% if post.summary %}
+      <p class="related-by-tags__item-summary">{{ post.summary }}</p>
+      {% endif %}
+      <div class="related-by-tags__item-tags">
         {% for tag in post.tags limit:3 %}
           <span class="related-tag">{{ tag }}</span>
         {% endfor %}
-      </span>
-      <span class="related-by-tags__item-date">{{ post.date | date: "%Y.%m.%d" }}</span>
+      </div>
     </a>
     {% endfor %}
   </div>
-</div>
+</section>
 {% endif %}
