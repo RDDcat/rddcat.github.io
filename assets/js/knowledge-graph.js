@@ -364,7 +364,7 @@
       lightSelection
         .attr("cx", (d) => d.x || 0)
         .attr("cy", (d) => d.y || 0)
-        .attr("opacity", (d) => (d.state === "dwelling" ? 0.95 : 0.78));
+        .attr("opacity", (d) => (d.state === "dwelling" ? 0 : 0.78));
     });
 
     return timer;
