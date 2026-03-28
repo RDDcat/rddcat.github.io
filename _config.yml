@@ -269,13 +269,6 @@ jekyll-archives:
     tag: /tags/:name/
 
 
-# Collections
-collections:
-  projects:
-    output: true
-    permalink: /:collection/:path/
-
-
 # HTML Compression
 # - https://jch.penibelst.de/
 compress_html:
@@ -299,15 +292,4 @@ defaults:
       related: true
       sidebar_main: false
       post_type: "article"
-  # _projects
-  - scope:
-      path: ""
-      type: projects
-    values:
-      layout: single
-      author_profile: false
-      read_time: true
-      share: true
-      related: true
-      post_type: "project"
 

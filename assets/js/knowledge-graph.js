@@ -3,30 +3,31 @@
 
   const THEMES = {
     light: {
-      link: "#e2e8f0",
-      linkHover: "#94a3b8",
-      text: "#1e293b",
+      link: "#9ca3af",
+      linkHover: "#6b7280",
+      text: "#ffffff",
       nodeStroke: "#fff",
     },
     dark: {
-      link: "rgba(124, 140, 255, 0.20)",
-      linkHover: "rgba(159, 176, 255, 0.78)",
+      link: "rgba(156, 163, 175, 0.35)",
+      linkHover: "rgba(209, 213, 219, 0.95)",
       text: "#ffffff",
       nodeStroke: "#151b23",
     },
   };
 
   const COLORS = {
-    post: "#7c8cff",
-    tag: "#94a3b8",
-    project: "#6ee7b7",
+    post: "#f5b14c",
+    tag: "#ffe8a3",
   };
 
-  const SIZES = {
+  const BASE_SIZES = {
     post: 5,
     tag: 8,
-    project: 7,
   };
+
+  const POST_SIZE_MIN = 4;
+  const POST_SIZE_MAX = 12;
 
   function detectTheme(container) {
     const bg = window.getComputedStyle(container).backgroundColor;
@@ -118,6 +119,9 @@
   }
 
   function renderGraph(g, data, width, height, isMini, svg, zoom, theme) {
+    const postLengthStats = buildPostLengthStats(data);
+    const glowAssets = ensureGlowAssets(svg, isMini);
+
     const simulation = d3
       .forceSimulation(data.nodes)
       .force(
@@ -125,13 +129,26 @@
         d3
           .forceLink(data.links)
           .id((d) => d.id)
-          .distance(isMini ? 40 : 60)
+          .distance(isMini ? 42 : 62)
       )
-      .force("charge", d3.forceManyBody().strength(isMini ? -40 : -80))
+      .force(
+        "charge",
+        d3.forceManyBody().strength((d) => {
+          if (d.type === "post") return isMini ? -20 : -38;
+          if (d.type === "tag") return isMini ? -8 : -14;
+          return isMini ? -18 : -34;
+        })
+      )
       .force("center", d3.forceCenter(width / 2, height / 2))
+      .force("x", d3.forceX(width / 2).strength(isMini ? 0.02 : 0.012))
+      .force("y", d3.forceY(height / 2).strength(isMini ? 0.02 : 0.012))
       .force(
         "collision",
-        d3.forceCollide().radius((d) => (SIZES[d.type] || 5) + 2)
+        d3
+          .forceCollide()
+          .radius((d) =>
+            getNodeRadius(d, postLengthStats) + (d.type === "post" ? 4.5 : 2.5)
+          )
       );
 
     const link = g
@@ -156,7 +173,21 @@
 
     node
       .append("circle")
-      .attr("r", (d) => SIZES[d.type] || 5)
+      .attr("class", "graph-node-glow")
+      .attr("r", (d) => getNodeRadius(d, postLengthStats) * (isMini ? 1.9 : 2.2))
+      .attr(
+        "fill",
+        (d) =>
+          `url(#${
+            glowAssets.gradientIds[d.type] || glowAssets.gradientIds.post
+          })`
+      )
+      .attr("filter", `url(#${glowAssets.filterId})`)
+      .attr("pointer-events", "none");
+
+    node
+      .append("circle")
+      .attr("r", (d) => getNodeRadius(d, postLengthStats))
       .attr("fill", (d) => COLORS[d.type] || COLORS.post)
       .attr("stroke", theme.nodeStroke)
       .attr("stroke-width", 1.5);
@@ -164,11 +195,13 @@
     if (!isMini) {
       node
         .append("text")
+        .attr("class", "graph-label")
         .text((d) => truncateLabel(d.label, 16))
-        .attr("dx", (d) => (SIZES[d.type] || 5) + 4)
-        .attr("dy", "0.35em")
+        .attr("text-anchor", "middle")
+        .attr("dy", (d) => getNodeRadius(d, postLengthStats) + 12)
         .attr("font-size", (d) => (d.type === "tag" ? "11px" : "10px"))
         .attr("fill", theme.text)
+        .style("opacity", (d) => (d.type === "tag" ? 1 : 0))
         .attr("pointer-events", "none");
     }
 
@@ -210,6 +243,122 @@
     svg.node().__theme = theme;
   }
 
+  function ensureGlowAssets(svg, isMini) {
+    const suffix = isMini ? "mini" : "main";
+    const glowFilterId = `graph-node-glow-${suffix}`;
+    let defs = svg.select("defs");
+    if (defs.empty()) defs = svg.append("defs");
+
+    if (defs.select(`#${glowFilterId}`).empty()) {
+      const filter = defs
+        .append("filter")
+        .attr("id", glowFilterId)
+        .attr("x", "-120%")
+        .attr("y", "-120%")
+        .attr("width", "340%")
+        .attr("height", "340%");
+
+      filter
+        .append("feGaussianBlur")
+        .attr("in", "SourceGraphic")
+        .attr("stdDeviation", isMini ? 1.3 : 1.7)
+        .attr("result", "blur");
+
+      filter
+        .append("feMerge")
+        .selectAll("feMergeNode")
+        .data(["blur"])
+        .enter()
+        .append("feMergeNode")
+        .attr("in", (d) => d);
+    }
+
+    const gradientIds = {};
+    Object.entries(COLORS).forEach(([type, color]) => {
+      const gradientId = `graph-node-glow-grad-${type}-${suffix}`;
+      gradientIds[type] = gradientId;
+
+      if (!defs.select(`#${gradientId}`).empty()) return;
+
+      const gradient = defs
+        .append("radialGradient")
+        .attr("id", gradientId)
+        .attr("cx", "50%")
+        .attr("cy", "50%")
+        .attr("r", "50%");
+
+      gradient
+        .append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", color)
+        .attr("stop-opacity", isMini ? 0.42 : 0.5);
+
+      gradient
+        .append("stop")
+        .attr("offset", "42%")
+        .attr("stop-color", color)
+        .attr("stop-opacity", isMini ? 0.14 : 0.2);
+
+      gradient
+        .append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", color)
+        .attr("stop-opacity", 0);
+    });
+
+    return {
+      filterId: glowFilterId,
+      gradientIds,
+    };
+  }
+
+  function buildPostLengthStats(data) {
+    const lengths = data.nodes
+      .filter((n) => n.type === "post")
+      .map((n) => Number(n.content_length) || 0)
+      .filter((len) => len > 0);
+
+    if (lengths.length === 0) {
+      return { min: 0, max: 0 };
+    }
+
+    return {
+      min: Math.min(...lengths),
+      max: Math.max(...lengths),
+    };
+  }
+
+  function getNodeRadius(node, postLengthStats) {
+    if (node.type !== "post") {
+      return BASE_SIZES[node.type] || 5;
+    }
+
+    const rawLength = Number(node.content_length) || 0;
+    const clampedLength = Math.max(0, rawLength);
+    const range = postLengthStats.max - postLengthStats.min;
+
+    if (range <= 0) {
+      return BASE_SIZES.post;
+    }
+
+    const logMin = Math.log1p(postLengthStats.min);
+    const logMax = Math.log1p(postLengthStats.max);
+    const logRange = logMax - logMin;
+
+    if (logRange <= 0) {
+      return BASE_SIZES.post;
+    }
+
+    const normalized = clamp01((Math.log1p(clampedLength) - logMin) / logRange);
+    return POST_SIZE_MIN + normalized * (POST_SIZE_MAX - POST_SIZE_MIN);
+  }
+
+  function clamp01(value) {
+    if (value < 0) return 0;
+    if (value > 1) return 1;
+    return value;
+  }
+
   function highlightConnections(d, node, link, data, theme) {
     const connectedIds = new Set();
     connectedIds.add(d.id);
@@ -222,6 +371,11 @@
     });
 
     node.style("opacity", (n) => (connectedIds.has(n.id) ? 1 : 0.15));
+    node
+      .selectAll("text.graph-label")
+      .style("opacity", (n) =>
+        n.type === "tag" ? 1 : connectedIds.has(n.id) ? 1 : 0
+      );
 
     link
       .attr("stroke", (l) => {
@@ -243,6 +397,9 @@
 
   function resetHighlight(node, link, theme) {
     node.style("opacity", 1);
+    node
+      .selectAll("text.graph-label")
+      .style("opacity", (d) => (d.type === "tag" ? 1 : 0));
     link
       .attr("stroke", theme.link)
       .attr("stroke-opacity", 0.6)
@@ -254,9 +411,6 @@
     if (d.type === "tag") {
       html += `<br><span class="tt-type">태그</span>`;
       if (d.count) html += ` &middot; ${d.count}개의 글`;
-    } else if (d.type === "project") {
-      html += `<br><span class="tt-type">프로젝트</span>`;
-      if (d.date) html += ` &middot; ${d.date}`;
     } else {
       html += `<br><span class="tt-type">글</span>`;
       if (d.date) html += ` &middot; ${d.date}`;

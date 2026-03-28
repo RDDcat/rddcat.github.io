@@ -4,7 +4,3 @@ main:
     url: /posts/
   - title: "Tags"
     url: /tags/
-  - title: "Graph"
-    url: /graph/
-  - title: "Projects"
-    url: /projects/

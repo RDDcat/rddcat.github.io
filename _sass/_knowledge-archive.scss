@@ -456,55 +456,57 @@ td {
   border: 1px solid rgba(124, 140, 255, 0.14);
 }
 
-/* ---- 3D Hero Section ---- */
-.hero-3d {
+/* ---- Graph Hero Section ---- */
+.hero-graph {
   position: relative;
   width: 100vw;
   height: 100vh;
   margin-left: calc(-50vw + 50%);
   overflow: hidden;
+  background: var(--cursor-bg);
+  border-bottom: 1px solid rgba(124, 140, 255, 0.12);
 
-  canvas {
+  &__graph {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
+  }
+
+  .graph-container--full {
     width: 100%;
     height: 100%;
+    border: 0;
+    border-radius: 0;
+    background: var(--cursor-bg);
+  }
+
+  .graph-controls--inside {
+    bottom: 2rem;
   }
 
   &__overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 2;
-    pointer-events: none;
+    z-index: 40;
+    background: rgba(0, 0, 0, 0.58);
   }
 
   &__title {
-    font-size: 3.5rem;
+    font-size: 3.33rem;
     font-weight: 800;
     color: #fff;
     letter-spacing: -0.03em;
     margin-bottom: 0.5rem;
     text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
     user-select: none;
-  }
-
-  &__sub {
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.65);
-    margin-bottom: 3rem;
-    user-select: none;
+    text-align: center;
+    padding: 0 1rem;
   }
 
   &__cta {
-    pointer-events: auto;
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
@@ -520,6 +522,7 @@ td {
     letter-spacing: 0.02em;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     margin-top: 2rem;
+    cursor: pointer;
 
     &:hover {
       background: rgba(27, 36, 48, 0.96);
@@ -539,6 +542,14 @@ td {
   &__cta:hover &__cta-arrow {
     transform: translateX(4px);
   }
+
+  &.hero-graph--locked {
+    .graph-container--full,
+    .graph-controls--inside,
+    .graph-tooltip {
+      pointer-events: none;
+    }
+  }
 }
 
 @keyframes float-down {
@@ -551,7 +562,7 @@ td {
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   padding: 2rem 2rem 3rem;
-  background: #0a0a1a;
+  background: var(--cursor-bg);
   min-height: 100vh;
 
   &__header {
@@ -579,7 +590,7 @@ td {
   border: 1px solid rgba(99, 102, 241, 0.2);
   border-radius: 12px;
   overflow: hidden;
-  background: #0f0f23;
+  background: var(--cursor-bg);
   max-width: 1200px;
   margin: 0 auto;
 
@@ -891,7 +902,7 @@ body.layout--home-knowledge {
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   overflow: hidden;
-  background: #fafbfc;
+  background: var(--cursor-bg);
 
   svg {
     width: 100%;
@@ -920,13 +931,10 @@ body.layout--home-knowledge {
     border-radius: 50%;
 
     &--post {
-      background: #6366f1;
+      background: #f5b14c;
     }
     &--tag {
-      background: #f59e0b;
-    }
-    &--project {
-      background: #10b981;
+      background: #ffe8a3;
     }
   }
 }
@@ -1148,15 +1156,9 @@ body.layout--home-knowledge {
 
 /* ---- Responsive ---- */
 @media (max-width: 768px) {
-  .hero-3d {
+  .hero-graph {
     &__title {
-      font-size: 2.2rem;
-    }
-
-    &__sub {
-      font-size: 0.9rem;
-      padding: 0 1rem;
-      text-align: center;
+      font-size: 2.03rem;
     }
   }
 

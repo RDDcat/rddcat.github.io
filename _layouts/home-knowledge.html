@@ -2,17 +2,29 @@
 layout: default
 ---
 
-<!-- 3D Hero: fullscreen interactive -->
-<section id="hero-3d" class="hero-3d">
-  <canvas id="hero-canvas"></canvas>
-  <div class="hero-3d__overlay">
-    <h1 class="hero-3d__title">100만명이 방문한 지식 아카이브</h1>
-    <a href="/graph/" class="hero-3d__cta">
-      <span class="hero-3d__cta-text">세상의 비밀 엿보기</span>
-      <span class="hero-3d__cta-arrow">&rarr;</span>
-    </a>
+<section id="hero-graph" class="hero-graph hero-graph--locked">
+  <div class="hero-graph__graph">
+    <div id="graph-container" class="graph-container--full">
+      <div class="graph-controls--inside">
+        <div class="graph-controls__filters">
+          <button class="graph-filter-btn active" data-filter="all">전체</button>
+          <button class="graph-filter-btn" data-filter="post">글</button>
+          <button class="graph-filter-btn" data-filter="tag">태그</button>
+        </div>
+      </div>
+    </div>
+    <div id="graph-tooltip" class="graph-tooltip" style="display:none;"></div>
+  </div>
+
+  <div class="hero-graph__overlay" id="hero-graph-overlay">
+    <h1 class="hero-graph__title">100만명이 방문한 지식 아카이브</h1>
+    <button type="button" id="hero-graph-unlock-btn" class="hero-graph__cta">
+      <span class="hero-graph__cta-text">세상의 비밀 엿보기</span>
+      <span class="hero-graph__cta-arrow">&rarr;</span>
+    </button>
   </div>
 </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="{{ '/assets/js/hero-3d.js' | relative_url }}"></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="{{ '/assets/js/knowledge-graph.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/hero-graph-unlock.js' | relative_url }}"></script>
