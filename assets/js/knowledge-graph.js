@@ -50,7 +50,12 @@
     const theme = THEMES[detectTheme(container)];
 
     const existingSvg = container.querySelector("svg");
-    if (existingSvg) existingSvg.remove();
+    if (existingSvg) {
+      if (existingSvg.__lightTimer) {
+        existingSvg.__lightTimer.stop();
+      }
+      existingSvg.remove();
+    }
 
     const svg = d3
       .select(container)
@@ -160,6 +165,12 @@
       .attr("stroke", theme.link)
       .attr("stroke-width", 1)
       .attr("stroke-opacity", 0.6);
+
+    const lightLayer = g.append("g").attr("class", "graph-connection-lights");
+    const lightTimer = initConnectionLights(lightLayer, data, svg, isMini);
+    if (lightTimer) {
+      svg.node().__lightTimer = lightTimer;
+    }
 
     const node = g
       .append("g")
@@ -310,6 +321,225 @@
       filterId: glowFilterId,
       gradientIds,
     };
+  }
+
+  function initConnectionLights(lightLayer, data, svg, isMini) {
+    const nodeCount = data.nodes.length;
+    if (nodeCount === 0 || data.links.length === 0) return null;
+
+    const assets = ensureConnectionLightAssets(svg, isMini);
+    const lightCount = Math.min(
+      isMini ? 20 : 34,
+      Math.max(isMini ? 2 : 4, Math.round(nodeCount * (isMini ? 0.06 : 0.09)))
+    );
+
+    const adjacency = buildAdjacencyMap(data.links);
+    const lights = Array.from({ length: lightCount }, () =>
+      createRandomLightState(data.links, adjacency, isMini)
+    );
+
+    const lightSelection = lightLayer
+      .selectAll("circle")
+      .data(lights)
+      .join("circle")
+      .attr("r", isMini ? 3.4 : 4.3)
+      .attr("fill", `url(#${assets.gradientId})`)
+      .attr("filter", `url(#${assets.filterId})`)
+      .attr("pointer-events", "none");
+
+    let lastTime = performance.now();
+    const timer = d3.timer(() => {
+      const svgNode = svg.node();
+      if (!svgNode || !document.contains(svgNode)) {
+        timer.stop();
+        return;
+      }
+
+      const now = performance.now();
+      const dt = Math.min(0.05, (now - lastTime) / 1000);
+      lastTime = now;
+
+      lights.forEach((light) => updateLightState(light, adjacency, now, dt, isMini));
+
+      lightSelection
+        .attr("cx", (d) => d.x || 0)
+        .attr("cy", (d) => d.y || 0)
+        .attr("opacity", (d) => (d.state === "dwelling" ? 0.95 : 0.78));
+    });
+
+    return timer;
+  }
+
+  function ensureConnectionLightAssets(svg, isMini) {
+    const suffix = isMini ? "mini" : "main";
+    const filterId = `graph-connection-light-filter-${suffix}`;
+    const gradientId = `graph-connection-light-grad-${suffix}`;
+    let defs = svg.select("defs");
+    if (defs.empty()) defs = svg.append("defs");
+
+    if (defs.select(`#${gradientId}`).empty()) {
+      const gradient = defs
+        .append("radialGradient")
+        .attr("id", gradientId)
+        .attr("cx", "50%")
+        .attr("cy", "50%")
+        .attr("r", "50%");
+
+      gradient
+        .append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", "#fffbe8")
+        .attr("stop-opacity", 0.98);
+
+      gradient
+        .append("stop")
+        .attr("offset", "30%")
+        .attr("stop-color", "#ffd88f")
+        .attr("stop-opacity", isMini ? 0.36 : 0.42);
+
+      gradient
+        .append("stop")
+        .attr("offset", "72%")
+        .attr("stop-color", "#ffd88f")
+        .attr("stop-opacity", 0);
+    }
+
+    if (defs.select(`#${filterId}`).empty()) {
+      const filter = defs
+        .append("filter")
+        .attr("id", filterId)
+        .attr("x", "-180%")
+        .attr("y", "-180%")
+        .attr("width", "460%")
+        .attr("height", "460%");
+
+      filter
+        .append("feGaussianBlur")
+        .attr("in", "SourceGraphic")
+        .attr("stdDeviation", isMini ? 0.7 : 1.0)
+        .attr("result", "blur");
+
+      filter
+        .append("feMerge")
+        .selectAll("feMergeNode")
+        .data(["blur"])
+        .enter()
+        .append("feMergeNode")
+        .attr("in", (d) => d);
+    }
+
+    return { gradientId, filterId };
+  }
+
+  function createRandomLightState(links, adjacency, isMini) {
+    const baseLink = links[Math.floor(Math.random() * links.length)];
+    const sourceId = getNodeId(baseLink.source);
+    const targetId = getNodeId(baseLink.target);
+    const forward = Math.random() > 0.5;
+
+    return {
+      state: "moving",
+      currentLink: baseLink,
+      fromNodeId: forward ? sourceId : targetId,
+      toNodeId: forward ? targetId : sourceId,
+      progress: Math.random(),
+      speed: randomInRange(isMini ? 1.32 : 1.08, isMini ? 3.12 : 2.4),
+      prevLink: null,
+      dwellUntil: 0,
+      x: 0,
+      y: 0,
+      adjacency,
+    };
+  }
+
+  function updateLightState(light, adjacency, now, dt, isMini) {
+    if (light.state === "dwelling") {
+      const currentNode = light.currentNodeId;
+      const next = pickNextLink(adjacency, currentNode, light.prevLink);
+      if (now >= light.dwellUntil && next) {
+        const sourceId = getNodeId(next.source);
+        const targetId = getNodeId(next.target);
+        light.currentLink = next;
+        light.fromNodeId = sourceId === currentNode ? sourceId : targetId;
+        light.toNodeId = sourceId === currentNode ? targetId : sourceId;
+        light.progress = 0;
+        light.speed = randomInRange(isMini ? 1.32 : 1.08, isMini ? 3.12 : 2.4);
+        light.state = "moving";
+      } else {
+        const nodeObj =
+          light.currentLink &&
+          (getNodeId(light.currentLink.source) === currentNode
+            ? light.currentLink.source
+            : light.currentLink.target);
+        if (nodeObj && typeof nodeObj.x === "number" && typeof nodeObj.y === "number") {
+          light.x = nodeObj.x;
+          light.y = nodeObj.y;
+        }
+      }
+      return;
+    }
+
+    const fromNode =
+      getNodeId(light.currentLink.source) === light.fromNodeId
+        ? light.currentLink.source
+        : light.currentLink.target;
+    const toNode =
+      getNodeId(light.currentLink.source) === light.fromNodeId
+        ? light.currentLink.target
+        : light.currentLink.source;
+
+    if (!fromNode || !toNode) return;
+    if (typeof fromNode.x !== "number" || typeof toNode.x !== "number") return;
+
+    light.progress += light.speed * dt;
+    if (light.progress >= 1) {
+      light.progress = 1;
+    }
+
+    light.x = fromNode.x + (toNode.x - fromNode.x) * light.progress;
+    light.y = fromNode.y + (toNode.y - fromNode.y) * light.progress;
+
+    if (light.progress >= 1) {
+      light.state = "dwelling";
+      light.currentNodeId = light.toNodeId;
+      light.prevLink = light.currentLink;
+      light.dwellUntil = now + randomInRange(220, 1200);
+    }
+  }
+
+  function buildAdjacencyMap(links) {
+    const adjacency = {};
+    links.forEach((link) => {
+      const sourceId = getNodeId(link.source);
+      const targetId = getNodeId(link.target);
+      if (!sourceId || !targetId) return;
+      if (!adjacency[sourceId]) adjacency[sourceId] = [];
+      if (!adjacency[targetId]) adjacency[targetId] = [];
+      adjacency[sourceId].push(link);
+      adjacency[targetId].push(link);
+    });
+    return adjacency;
+  }
+
+  function pickNextLink(adjacency, nodeId, prevLink) {
+    const candidates = adjacency[nodeId] || [];
+    if (candidates.length === 0) return null;
+    if (candidates.length === 1) return candidates[0];
+
+    const pool =
+      prevLink && candidates.length > 1
+        ? candidates.filter((link) => link !== prevLink)
+        : candidates;
+    const targetPool = pool.length > 0 ? pool : candidates;
+    return targetPool[Math.floor(Math.random() * targetPool.length)];
+  }
+
+  function getNodeId(nodeOrId) {
+    return typeof nodeOrId === "object" ? nodeOrId.id : nodeOrId;
+  }
+
+  function randomInRange(min, max) {
+    return min + Math.random() * (max - min);
   }
 
   function buildPostLengthStats(data) {
