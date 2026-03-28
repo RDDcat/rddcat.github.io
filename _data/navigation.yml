@@ -2,5 +2,3 @@
 main:
   - title: "Posts"
     url: /posts/
-  - title: "Tags"
-    url: /tags/

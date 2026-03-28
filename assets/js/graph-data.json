@@ -12,7 +12,7 @@ layout: null
 
 {% comment %} Tag nodes {% endcomment %}
 {% for tag in site.tags %}
-  {% capture node %}{"id":"tag-{{ tag[0] | slugify: 'none' }}","type":"tag","label":"{{ tag[0] | escape }}","url":"/tags/#{{ tag[0] | slugify: 'none' }}","count":{{ tag[1].size }}}{% endcapture %}
+  {% capture node %}{"id":"tag-{{ tag[0] | slugify: 'none' }}","type":"tag","label":"{{ tag[0] | escape }}","url":"/posts/?tags={{ tag[0] | uri_escape }}","count":{{ tag[1].size }}}{% endcapture %}
   {% assign nodes = nodes | push: node %}
 {% endfor %}
 
