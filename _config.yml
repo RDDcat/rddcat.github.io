@@ -59,7 +59,7 @@ reCaptcha:
 atom_feed:
   path                   : # blank (default) uses feed.xml
   hide                   : # true, false (default)
-search                   : true
+search                   : false
 search_full_content      : true
 search_provider          : # lunr (default), algolia, google
 lunr:
@@ -247,7 +247,6 @@ collections:
     permalink: /:collection/:path/
 
 
-
 # Defaults
 defaults:
   # _posts
@@ -263,15 +262,4 @@ defaults:
       related: true
       sidebar_main: false
       post_type: "article"
-  # _projects
-  - scope:
-      path: ""
-      type: projects
-    values:
-      layout: single
-      author_profile: false
-      read_time: true
-      share: true
-      related: true
-      post_type: "project"
 

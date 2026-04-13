@@ -456,78 +456,95 @@ td {
   border: 1px solid rgba(124, 140, 255, 0.14);
 }
 
-/* ---- 3D Hero Section ---- */
-.hero-3d {
+/* ---- Graph Hero Section ---- */
+.hero-graph {
   position: relative;
   width: 100vw;
   height: 100vh;
   margin-left: calc(-50vw + 50%);
   overflow: hidden;
+  background: var(--cursor-bg);
+  border-bottom: 1px solid rgba(124, 140, 255, 0.12);
 
-  canvas {
+  &__graph {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
+  }
+
+  .graph-container--full {
     width: 100%;
     height: 100%;
+    border: 0;
+    border-radius: 0;
+    background: var(--cursor-bg);
+  }
+
+  .graph-controls--inside {
+    bottom: 2rem;
   }
 
   &__overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 2;
-    pointer-events: none;
+    z-index: 40;
+    background: rgba(0, 0, 0, 0.58);
   }
 
   &__title {
-    font-size: 3.5rem;
+    font-size: 3.33rem;
     font-weight: 800;
     color: #fff;
     letter-spacing: -0.03em;
     margin-bottom: 0.5rem;
     text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
     user-select: none;
-  }
-
-  &__sub {
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.65);
-    margin-bottom: 3rem;
-    user-select: none;
+    text-align: center;
+    padding: 0 1rem;
   }
 
   &__cta {
-    pointer-events: auto;
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
-    padding: 0.8rem 2rem;
-    border: 1px solid rgba(124, 140, 255, 0.32);
+    padding: 0.85rem 2.05rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 40px;
-    background: var(--cursor-overlay);
-    backdrop-filter: blur(12px);
-    color: var(--cursor-text);
+    background: linear-gradient(
+      140deg,
+      rgba(255, 255, 255, 0.16),
+      rgba(124, 140, 255, 0.1)
+    );
+    backdrop-filter: blur(16px) saturate(130%);
+    -webkit-backdrop-filter: blur(16px) saturate(130%);
+    color: #f7fbff;
     text-decoration: none;
     font-size: 0.95rem;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.02em;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      0 10px 30px rgba(0, 0, 0, 0.32);
+    transition: all 0.32s cubic-bezier(0.4, 0, 0.2, 1);
     margin-top: 2rem;
+    cursor: pointer;
 
     &:hover {
-      background: rgba(27, 36, 48, 0.96);
-      border-color: rgba(124, 140, 255, 0.5);
+      background: linear-gradient(
+        140deg,
+        rgba(255, 255, 255, 0.24),
+        rgba(124, 140, 255, 0.18)
+      );
+      border-color: rgba(255, 255, 255, 0.3);
       color: #fff;
       text-decoration: none;
       transform: translateY(-2px);
-      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.28);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.45),
+        0 16px 34px rgba(0, 0, 0, 0.34);
     }
   }
 
@@ -538,6 +555,14 @@ td {
 
   &__cta:hover &__cta-arrow {
     transform: translateX(4px);
+  }
+
+  &.hero-graph--locked {
+    .graph-container--full,
+    .graph-controls--inside,
+    .graph-tooltip {
+      pointer-events: none;
+    }
   }
 }
 
@@ -551,7 +576,7 @@ td {
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   padding: 2rem 2rem 3rem;
-  background: #0a0a1a;
+  background: var(--cursor-bg);
   min-height: 100vh;
 
   &__header {
@@ -579,7 +604,7 @@ td {
   border: 1px solid rgba(99, 102, 241, 0.2);
   border-radius: 12px;
   overflow: hidden;
-  background: #0f0f23;
+  background: var(--cursor-bg);
   max-width: 1200px;
   margin: 0 auto;
 
@@ -891,7 +916,7 @@ body.layout--home-knowledge {
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   overflow: hidden;
-  background: #fafbfc;
+  background: var(--cursor-bg);
 
   svg {
     width: 100%;
@@ -920,13 +945,10 @@ body.layout--home-knowledge {
     border-radius: 50%;
 
     &--post {
-      background: #6366f1;
+      background: #f5b14c;
     }
     &--tag {
-      background: #f59e0b;
-    }
-    &--project {
-      background: #10b981;
+      background: #ffe8a3;
     }
   }
 }
@@ -1146,17 +1168,171 @@ body.layout--home-knowledge {
 .tag--md { font-size: 0.85rem; }
 .tag--sm { font-size: 0.78rem; }
 
-/* ---- Responsive ---- */
-@media (max-width: 768px) {
-  .hero-3d {
-    &__title {
-      font-size: 2.2rem;
+/* ---- Posts filters ---- */
+.posts-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+
+  &__sort {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+
+    &-label {
+      color: var(--cursor-text-muted);
+      font-size: 0.86rem;
+    }
+  }
+
+  &__sort-buttons {
+    display: inline-flex;
+    gap: 0.35rem;
+  }
+
+  .posts-sort-btn {
+    min-width: 82px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem;
+    background: var(--cursor-surface-2);
+    color: var(--cursor-text-muted);
+    border: 1px solid rgba(124, 140, 255, 0.22);
+
+    &:hover {
+      background: rgba(124, 140, 255, 0.18);
+      color: var(--cursor-text);
+      border-color: rgba(124, 140, 255, 0.38);
     }
 
-    &__sub {
-      font-size: 0.9rem;
-      padding: 0 1rem;
-      text-align: center;
+    &.active {
+      background: #6366f1;
+      color: #fff;
+      border-color: #6366f1;
+    }
+  }
+
+  &__tags {
+    position: relative;
+  }
+
+  &__tag-toggle {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid rgba(124, 140, 255, 0.28);
+    border-radius: 10px;
+    background: var(--cursor-surface);
+    color: var(--cursor-text);
+    cursor: pointer;
+  }
+
+  &__tag-panel {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.45rem);
+    min-width: 220px;
+    max-height: 320px;
+    overflow: auto;
+    padding: 0.6rem;
+    border-radius: 12px;
+    border: 1px solid rgba(124, 140, 255, 0.2);
+    background: var(--cursor-surface-2);
+    z-index: 80;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.3);
+  }
+
+  &__tag-option {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.25rem;
+    cursor: pointer;
+    color: var(--cursor-text);
+    font-size: 0.86rem;
+
+    small {
+      color: var(--cursor-text-muted);
+    }
+  }
+}
+
+.posts-active-tags {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.9rem;
+
+  &__chip,
+  &__clear {
+    border: 1px solid rgba(124, 140, 255, 0.25);
+    border-radius: 999px;
+    background: rgba(124, 140, 255, 0.12);
+    color: #dbe5ff;
+    font-size: 0.78rem;
+    padding: 0.2rem 0.6rem;
+    cursor: pointer;
+  }
+
+  &__clear {
+    background: transparent;
+    color: var(--cursor-text-muted);
+  }
+}
+
+.posts-list {
+  &__item {
+    margin-top: 0.95rem;
+    margin-bottom: 0.95rem;
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.1),
+      rgba(124, 140, 255, 0.06)
+    );
+    backdrop-filter: blur(14px) saturate(125%);
+    -webkit-backdrop-filter: blur(14px) saturate(125%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      0 12px 30px rgba(0, 0, 0, 0.24);
+    transition: border-color 0.24s ease, box-shadow 0.24s ease,
+      background 0.24s ease, transform 0.24s ease;
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.24);
+      background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.14),
+        rgba(124, 140, 255, 0.1)
+      );
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        0 16px 36px rgba(0, 0, 0, 0.28);
+      transform: translateY(-2px);
+    }
+  }
+
+  &__item[hidden] {
+    display: none !important;
+  }
+
+  &__tag {
+    color: #cdd6ff;
+  }
+}
+
+.posts-view {
+  background: var(--cursor-bg);
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  .hero-graph {
+    &__title {
+      font-size: 2.03rem;
     }
   }
 
@@ -1177,6 +1353,14 @@ body.layout--home-knowledge {
   .home-graph-section .graph-controls {
     &__search input {
       width: 100%;
+    }
+  }
+
+  .posts-toolbar {
+    &__tag-panel {
+      right: auto;
+      left: 0;
+      width: min(85vw, 280px);
     }
   }
 }
