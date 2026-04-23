@@ -6,4 +6,37 @@
   gtag('js', new Date());
 
   gtag('config', '{{ site.analytics.google.tracking_id }}', { 'anonymize_ip': {{ site.analytics.google.anonymize_ip | default: false }}});
+
+  // 블로그 글 커스텀 이벤트
+  {% if page.title %}
+  gtag('event', 'view_post', {
+    post_title: '{{ page.title | escape }}',
+    post_type: '{{ page.type }}',
+    post_tags: '{{ page.tags | join: ", " }}',
+    post_url: '{{ page.url }}'
+  });
+  {% endif %}
+
+  // 스크롤 깊이 추적
+  let scrollTracked = {};
+  document.addEventListener('scroll', () => {
+    const scrollPercent = Math.round((window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100);
+
+    if (scrollPercent > 25 && !scrollTracked[25]) {
+      gtag('event', 'scroll_depth', { scroll_percent: 25 });
+      scrollTracked[25] = true;
+    }
+    if (scrollPercent > 50 && !scrollTracked[50]) {
+      gtag('event', 'scroll_depth', { scroll_percent: 50 });
+      scrollTracked[50] = true;
+    }
+    if (scrollPercent > 75 && !scrollTracked[75]) {
+      gtag('event', 'scroll_depth', { scroll_percent: 75 });
+      scrollTracked[75] = true;
+    }
+    if (scrollPercent > 90 && !scrollTracked[90]) {
+      gtag('event', 'scroll_depth', { scroll_percent: 90 });
+      scrollTracked[90] = true;
+    }
+  });
 </script>
