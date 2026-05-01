@@ -203,7 +203,8 @@ sass:
 permalink: /:categories/:title/
 paginate: 15 # amount of posts to show
 paginate_path: /page:num/
-timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: Asia/Seoul # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+future: true
 
 
 # Plugins (previously gems:)
