@@ -2,29 +2,41 @@
 layout: default
 ---
 
-<section id="hero-graph" class="hero-graph hero-graph--locked">
-  <div class="hero-graph__graph">
-    <div id="graph-container" class="graph-container--full">
-      <div class="graph-controls--inside">
-        <div class="graph-controls__filters">
-          <button class="graph-filter-btn active" data-filter="all">전체</button>
-          <button class="graph-filter-btn" data-filter="post">글</button>
-          <button class="graph-filter-btn" data-filter="tag">태그</button>
-        </div>
-      </div>
-    </div>
-    <div id="graph-tooltip" class="graph-tooltip" style="display:none;"></div>
+<section id="hero-space" class="hero-space hero-space--locked">
+  <canvas
+    id="space-canvas"
+    class="hero-space__canvas"
+    data-graph="{{ '/assets/js/graph-data.json' | relative_url }}"
+    data-tree="{{ '/assets/js/tag-tree.json' | relative_url }}"
+  ></canvas>
+
+  <div id="space-tooltip" class="hero-space__tooltip" style="display:none;"></div>
+
+  <div class="hero-space__filters">
+    <button class="space-filter-btn active" data-filter="all">전체</button>
+    <button class="space-filter-btn" data-filter="post">글</button>
+    <button class="space-filter-btn" data-filter="tag">태그</button>
   </div>
 
-  <div class="hero-graph__overlay" id="hero-graph-overlay">
-    <h1 class="hero-graph__title">100만명이 방문한 지식 아카이브</h1>
-    <button type="button" id="hero-graph-unlock-btn" class="hero-graph__cta">
-      <span class="hero-graph__cta-text">세상의 비밀 엿보기</span>
-      <span class="hero-graph__cta-arrow">&rarr;</span>
-    </button>
+  <div class="hero-space__overlay" id="hero-space-overlay">
+    <div class="hero-space__overlay-inner">
+      <p class="hero-space__eyebrow">RDDcat &middot; Knowledge Universe</p>
+      <h1 class="hero-space__title">100만명이 방문한 지식 아카이브</h1>
+      <p class="hero-space__sub">흩어진 글들이 별이 되어 하나의 우주를 이룹니다.</p>
+      <button type="button" id="hero-space-enter-btn" class="hero-space__cta">
+        <span class="hero-space__cta-text">세상의 비밀 엿보기</span>
+        <span class="hero-space__cta-arrow">&rarr;</span>
+      </button>
+    </div>
   </div>
 </section>
 
-<script src="https://d3js.org/d3.v7.min.js"></script>
-<script src="{{ '/assets/js/knowledge-graph.js' | relative_url }}"></script>
-<script src="{{ '/assets/js/hero-graph-unlock.js' | relative_url }}"></script>
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+</script>
+<script type="module" src="{{ '/assets/js/hero-space.js' | relative_url }}"></script>
